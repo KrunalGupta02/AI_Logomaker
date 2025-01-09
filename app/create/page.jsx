@@ -24,19 +24,28 @@ function CreateLogo() {
       {step == 1 ? (
         <LogoTitle
           onHandleInputChange={(v) => onHandleInputChange("title", v)}
+          formData={formData}
         />
       ) : step == 2 ? (
-        <LogoDesc onHandleInputChange={(v) => onHandleInputChange("desc", v)} />
+        <LogoDesc
+          onHandleInputChange={(v) => onHandleInputChange("desc", v)}
+          formData={formData}
+        />
       ) : step == 3 ? (
         <LogoPallete
           onHandleInputChange={(v) => onHandleInputChange("palette", v)}
+          formData={formData}
         />
       ) : step == 4 ? (
         <LogoDesigns
           onHandleInputChange={(v) => onHandleInputChange("design", v)}
+          formData={formData}
         />
       ) : step == 5 ? (
-        <LogoIdea onHandleInputChange={(v) => onHandleInputChange("idea", v)} />
+        <LogoIdea
+          onHandleInputChange={(v) => onHandleInputChange("idea", v)}
+          formData={formData}
+        />
       ) : null}
 
       <div className="flex items-center justify-between mt-10">
