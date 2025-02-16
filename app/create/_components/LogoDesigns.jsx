@@ -1,4 +1,3 @@
-import { Heading } from "lucide-react";
 import React, { useState } from "react";
 import HeadingDescription from "./HeadingDescription";
 import Lookup from "@/app/_components/_data/Lookup";
@@ -19,14 +18,19 @@ const LogoDesigns = ({ onHandleInputChange, formData }) => {
           <div
             key={index}
             onClick={() => {
-              setSelectedOption(design.title);
+              setSelectedOption(design?.title);
               onHandleInputChange(design);
             }}
             className={`p-1 hover:border border-2 cursor-pointer ${
-              selectedOption == design.title &&
+              selectedOption == design?.title &&
               "border-2 border-primary rounded-xl"
             }`}
           >
+            {
+              <div className="text-center font-bold uppercase text-sm">
+                {design.title}
+              </div>
+            }
             <Image
               className="w-full rounded-xl h-[150px] object-fill"
               src={design.image}

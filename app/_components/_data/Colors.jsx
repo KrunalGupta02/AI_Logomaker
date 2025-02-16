@@ -9,18 +9,18 @@ export default [
   },
   {
     name: "Sunset Warmth",
-    colors: ["#ff7e67", "#ff9770", "#ffb07b", "#ffc385", "#ffdb90"],
+    colors: ["#ff6f61", "#ff8566", "#ff9f6b", "#ffb774", "#ffd382"],
+  },
+  {
+    name: "Forest Greens",
+    colors: ["#2a6f4e", "#3e8e68", "#56a581", "#70bd9b", "#8fd6b5"],
   },
   {
     name: "Earthy Browns",
-    colors: ["#8d5524", "#c68642", "#e0ac69", "#f1c27d", "#ffdbac"],
+    colors: ["#5d4037", "#795548", "#8d6e63", "#a1887f", "#d7ccc8"],
   },
   {
-    name: "Shades of Purple",
-    colors: ["#E6E6FA", "#D8BFD8", "#DDA0DD", "#EE82EE", "#DA70D6"],
-  },
-  {
-    name: "Shades of Red",
-    colors: ["#FF0000", "#DC143C", "#B22222", "#8B0000", "#FF6347"],
+    name: "Soft Purples",
+    colors: ["#6a1b9a", "#7b1fa2", "#8e24aa", "#9c27b0", "#ab47bc"],
   },
 ];
