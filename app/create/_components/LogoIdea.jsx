@@ -40,7 +40,20 @@ const LogoIdea = ({ onHandleInputChange, formData }) => {
         title={Lookup.LogoIdeaTitle}
         description={Lookup.LogoIdeaDesc}
       />
-
+      <div className="flex flex-wrap gap-3 mt-6">
+        {ideas &&
+          ideas.map((item, index) => (
+            <h2
+              key={index}
+              className={`p-2 rounded-full border px-3 cursor-pointer hover:border-primary ${
+                selectedOption == item && "border-primary"
+              }`}
+              onClick={() => setSelectedOption(item)}
+            >
+              {item}
+            </h2>
+          ))}
+      </div>
       <div className="flex items-center justify-center">
         {loading && <Loader2Icon className="animate-spin my-10" />}
       </div>
