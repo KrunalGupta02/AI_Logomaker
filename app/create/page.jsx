@@ -55,7 +55,7 @@ function CreateLogo() {
             Previous
           </Button>
         )}
-        {step !== 5 && (
+        {step && (
           <Button onClick={() => setStep(step + 1)}>
             <ArrowRight />
             Continue
