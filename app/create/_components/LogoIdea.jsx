@@ -12,7 +12,7 @@ const LogoIdea = ({ onHandleInputChange, formData }) => {
 
   useEffect(() => {
     generateLogoDesignIdea();
-  }, [formData]);
+  }, []);
 
   const generateLogoDesignIdea = async () => {
     setLoading(true);
