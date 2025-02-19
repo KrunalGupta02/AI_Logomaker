@@ -1,9 +1,11 @@
 import { AILogoPrompt } from "@/configs/AiModel";
+import { db } from "@/configs/FirebaseConfig";
 import axios from "axios";
+import { doc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
-  const { prompt } = await req.json();
+  const { prompt, email, title, desc } = await req.json();
 
   try {
     // Generate AI Text Prompt for Logo
@@ -17,7 +19,7 @@ export async function POST(req) {
       AIPrompt,
       {
         headers: {
-          Authorization: "Bearer" + process.env.HUGGING_FACE_API_KEY,
+          Authorization: "Bearer " + process.env.HUGGING_FACE_API_KEY,
           "Content-Type": "application/json",
         },
         responseType: "arraybuffer",
@@ -32,6 +34,15 @@ export async function POST(req) {
     console.log(base64ImageWithMime);
 
     // Save to Firebase DB
+    try {
+      await setDoc(doc(db, "users", email, "logos", Date.now().toString()), {
+        image: base64ImageWithMime,
+        title: title,
+        desc: desc,
+      });
+    } catch (e) {
+      console.log(e);
+    }
 
     return NextResponse.json({ image: base64ImageWithMime });
 

@@ -10,6 +10,8 @@ const GenerateLogo = () => {
 
   const [formData, setFormData] = useState();
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (typeof window != undefined && userDetail?.email) {
       const storage = localStorage.getItem("formData");
@@ -28,6 +30,7 @@ const GenerateLogo = () => {
   }, [formData]);
 
   const GenerateAILogo = async () => {
+    setLoading(true);
     const PROMPT = Prompt.LOGO_PROMPT.replace("{logoTitle}", formData?.title)
       .replace("{logoDesc}", formData?.desc)
       .replace("{logoColor}", formData?.palette)
@@ -41,8 +44,12 @@ const GenerateLogo = () => {
 
     const result = await axios.post("/api/ai-logo-model", {
       prompt: PROMPT,
+      email: userDetail.email,
+      title: formData?.title,
+      desc: formData?.desc,
     });
     console.log(result.data, "data");
+    setLoading(false);
   };
 
   return <div>GenerateLogo</div>;
