@@ -38,5 +38,24 @@ export const AIDesignIdea = model.startChat({
   ],
 });
 
-// const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
-// console.log(result.response.text());
+export const AILogoPrompt = model.startChat({
+  generationConfig,
+  history: [
+    {
+      role: "user",
+      parts: [
+        {
+          text: "Generate a text prompt to create Logo for Logo Title/Brand name : title,with description: itle, with Color combination of Earthy Browns, also include the {logoIdea} and include Modern Sharp Lined Logos design idea and Referring to this Logo Prompt:Design a creative and artistic logo with a retro-modern vibe that showcases the brand's identity. Use bold outlines, intricate patterns, and vibrant, contrasting colors to make the design pop. Incorporate thematic elements like food, nature, technology, or lifestyle symbols depending on the brand's niche. The typography should be playful yet clear, complementing the overall composition with a dynamic and balanced layout. Ensure the logo feels unique, versatile, and eye-catching  Give me result in JSON portal with prompt field only\n",
+        },
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {
+          text: '```json\n{\n  "prompt": "Design a modern, sharp-lined logo for \\"title\\" (itle). Use an earthy brown color palette. Incorporate {logoIdea} into the design. Refer to the following inspiration: A creative and artistic logo with a retro-modern vibe showcasing the brand\'s identity. Use bold outlines, intricate patterns (where appropriate for a sharp-lined design), and vibrant, *contrasting* earthy browns (think different shades and textures of brown). Incorporate thematic elements related to the brand\'s niche [Describe the niche here if available - e.g., food, nature, technology, lifestyle]. The typography should be clean and modern, complementing the sharp lines and balanced layout. Ensure the logo feels unique, versatile, and eye-catching.  Prioritize clean lines and a modern aesthetic over overly intricate patterns."\n}\n```\n',
+        },
+      ],
+    },
+  ],
+});
