@@ -1,8 +1,11 @@
+// Clert Middleware to protect routes
+// clerkMiddleware is a middleware that protects routes using Clerk.js.
+
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isProtectedRoute = createRouteMatcher([
   "/dashboard(.*)",
-  "/generate-logo(.*)",
+  "/generate-logo(.*)", //* added our route here
 ]);
 
 export default clerkMiddleware(async (auth, req) => {

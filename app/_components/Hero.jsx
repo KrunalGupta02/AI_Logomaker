@@ -23,6 +23,8 @@ function Hero() {
           className="p-3 border rounded-md w-full shadow-md"
           onChange={(e) => setLogoTitle(e.target.value)}
         />
+
+        {/* Adding the route with the url params */}
         <Link href={"/create?title=" + logoTitle}>
           <Button className="w-full p-6">Get Started</Button>
         </Link>

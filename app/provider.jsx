@@ -12,6 +12,7 @@ const Provider = ({ children }) => {
 
   const [userDetail, setUserDetail] = useState();
 
+  // Check user auth available for not
   useEffect(() => {
     user && CheckUserAuth();
   }, [user]);

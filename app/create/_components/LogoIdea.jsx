@@ -26,6 +26,7 @@ const LogoIdea = ({ onHandleInputChange, formData }) => {
 
     console.log(PROMPT);
     const result = await axios.post("/api/ai-design-ideas", {
+      // api body
       prompt: PROMPT,
     });
 
@@ -40,9 +41,12 @@ const LogoIdea = ({ onHandleInputChange, formData }) => {
         title={Lookup.LogoIdeaTitle}
         description={Lookup.LogoIdeaDesc}
       />
+
+      {/* Loading component */}
       <div className="flex items-center justify-center">
         {loading && <Loader2Icon className="animate-spin my-10" />}
       </div>
+
       <div className="flex flex-wrap gap-3 mt-6">
         {ideas &&
           ideas.map((item, index) => (

@@ -18,6 +18,7 @@ const PricingModel = ({ formData }) => {
       localStorage.setItem("formData", JSON.stringify(formData));
     }
   }, [formData]);
+
   return (
     <div className="">
       <HeadingDescription
@@ -45,6 +46,7 @@ const PricingModel = ({ formData }) => {
                 </h2>
               ))}
             </div>
+
             {/* Redirect button for sign in  */}
             {user ? (
               <Button className="mt-5">{pricing.button}</Button>
