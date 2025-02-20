@@ -6,7 +6,7 @@ import { Loader2Icon } from "lucide-react";
 import Prompt from "@/app/_components/_data/Prompt";
 
 const LogoIdea = ({ onHandleInputChange, formData }) => {
-  const [ideas, setIdeas] = useState();
+  const [ideas, setIdeas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState(formData?.idea);
 
@@ -25,14 +25,19 @@ const LogoIdea = ({ onHandleInputChange, formData }) => {
       .replace("{logoPrompt}", formData.design.prompt);
 
     console.log(PROMPT);
-    const result = await axios.post("/api/ai-design-ideas", {
-      // api body
-      prompt: PROMPT,
-    });
+    try {
+      const result = await axios.post("/api/ai-design-ideas", {
+        prompt: PROMPT,
+      });
 
-    console.log(result.data);
-    setIdeas(result.data.ideas);
-    setLoading(false);
+      console.log(result.data.data.ideas);
+
+      setIdeas(result.data.data.ideas);
+    } catch (error) {
+      console.error("Error fetching ideas:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,6 +67,7 @@ const LogoIdea = ({ onHandleInputChange, formData }) => {
               {item}
             </h2>
           ))}
+
         <h2
           onClick={() => {
             setSelectedOption("Let AI Select the best idea");
