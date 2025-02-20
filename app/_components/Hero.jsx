@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Lookup from "./_data/Lookup";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 function Hero() {
   const [logoTitle, setLogoTitle] = useState();
@@ -17,7 +18,7 @@ function Hero() {
       </h2>
       <p className="text-lg text-gray-500 text-center">{Lookup.HeroDesc}</p>
 
-      <div className="flex gap-6 w-full max-w-2xl mt-10 ">
+      <div className="flex gap-6 w-full max-w-2xl mt-10 items-center">
         <input
           placeholder={Lookup.InputTitlePlaceholder}
           className="p-3 border rounded-md w-full shadow-md"
@@ -29,6 +30,13 @@ function Hero() {
           <Button className="w-full p-6">Get Started</Button>
         </Link>
       </div>
+      <Image
+        src={"/landing.png"}
+        width={1500}
+        height={800}
+        loading="lazy"
+        alt="heroImg"
+      />
     </div>
   );
 }
