@@ -9,11 +9,17 @@ import LogoPallete from "./_components/LogoPallete";
 import LogoDesigns from "./_components/LogoDesigns";
 import LogoIdea from "./_components/LogoIdea";
 import PricingModel from "./_components/PricingModel";
+import { useSearchParams } from "next/navigation";
 
 function CreateLogo() {
   const [step, setStep] = useState(1);
 
-  const [formData, setFormData] = useState();
+  const searchParams = useSearchParams();
+  const [formData, setFormData] = useState(() => {
+    return {
+      title: searchParams?.get("title") ?? "", // Get title from URL
+    };
+  });
 
   const onHandleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
