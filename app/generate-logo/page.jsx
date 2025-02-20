@@ -5,6 +5,8 @@ import { UserDetailContext } from "../_context/UserDetailContext";
 import Prompt from "@/app/_components/_data/Prompt";
 import axios from "axios";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { toast } from "sonner";
 
 const GenerateLogo = () => {
   const { userDetail, setUserDetail } = useContext(UserDetailContext);
@@ -14,6 +16,10 @@ const GenerateLogo = () => {
   const [loading, setLoading] = useState(false);
 
   const [logoImage, setLogoImage] = useState();
+
+  const searchParams = useSearchParams();
+
+  const modelType = searchParams.get("type");
 
   useEffect(() => {
     if (typeof window != undefined && userDetail?.email) {
@@ -32,7 +38,19 @@ const GenerateLogo = () => {
     }
   }, [formData]);
 
+  // Clear the localStorage when the logoImage is updated
+  useEffect(() => {
+    if (typeof window != undefined && logoImage) {
+      localStorage.clear();
+    }
+  }, [logoImage]);
+
   const GenerateAILogo = async () => {
+    if (modelType != "Free" && userDetail?.credits <= 0) {
+      toast("You don't have enough credits to generate the logo");
+      return;
+    }
+
     setLoading(true);
     const PROMPT = Prompt.LOGO_PROMPT.replace("{logoTitle}", formData?.title)
       .replace("{logoDesc}", formData?.desc)
@@ -51,6 +69,8 @@ const GenerateLogo = () => {
       email: userDetail.email,
       title: formData?.title,
       desc: formData?.desc,
+      type: modelType,
+      userCredits: userDetail.credits,
     });
     console.log(result.data, "data");
     setLoading(false);
