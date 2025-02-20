@@ -14,7 +14,13 @@ function Header() {
         <Image src={"/logo.svg"} alt="logo" width={180} height={100} />
       </Link>
       <div className="flex gap-3 items-center">
-        {user ? <Button>Dashboard</Button> : <Button>Get Started</Button>}
+        {user ? (
+          <Link href={"/dashboard"}>
+            <Button>Dashboard</Button>
+          </Link>
+        ) : (
+          <Button>Get Started</Button>
+        )}
         <UserButton />
       </div>
     </div>
