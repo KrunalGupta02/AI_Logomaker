@@ -45,7 +45,7 @@ export default {
         "⚫ Wait time: Less than 10 seconds",
         "⚫ Only 5 Credits",
       ],
-      button: "Generate Free",
+      button: "Generate Premium Images",
     },
   ],
 };

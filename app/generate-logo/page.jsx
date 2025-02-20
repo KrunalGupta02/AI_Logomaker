@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { RingLoader } from "react-spinners";
 import { Download, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
+import Lookup from "../_components/_data/Lookup";
 
 const GenerateLogo = () => {
   const { userDetail, setUserDetail } = useContext(UserDetailContext);
@@ -93,8 +94,31 @@ const GenerateLogo = () => {
 
   return (
     <div>
-      <div className="mt-16 flex flex-col items-center justify-center ">
-        <h1>{loading && <RingLoader size={80} />}</h1>
+      <div className="mt-12 flex flex-col items-center justify-center ">
+        <h1>
+          {loading && (
+            <>
+              <h3 className="text-4xl text-primary font-bold mb-1">
+                {Lookup.LoadingWaitTitle}
+              </h3>
+              <Image
+                src={"/loading.gif"}
+                className="m-auto"
+                width={300}
+                height={300}
+                alt="loading"
+              />
+              <p className="text-xl my-2 mb-5">{Lookup.LoadingWaitDesc}</p>
+            </>
+          )}
+        </h1>
+
+        {!loading && (
+          <h1 className="text-primary font-bold text-4xl mb-8">
+            Your logo is being created
+          </h1>
+        )}
+
         {!loading && (
           <Image
             src={logoImage ? logoImage : "/design_1.png"}
@@ -105,24 +129,27 @@ const GenerateLogo = () => {
           />
         )}
       </div>
-      <div className="flex justify-center items-center mt-20 gap-10">
-        <button
-          onClick={() =>
-            handleImgDownload(logoImage ? logoImage : "/design_1.png")
-          }
-          className="flex items-center gap-2 bg-primary text-white p-2 px-1.5 rounded-lg text-base"
-        >
-          <Download />
-          Download
-        </button>
-        <Link
-          className="flex items-center gap-2 border rounded-lg border-[#e5e7eb] p-2 px-1.5 text-base"
-          href={"/dashboard"}
-        >
-          <LayoutDashboard />
-          Dashboard
-        </Link>
-      </div>
+
+      {!loading && (
+        <div className="flex justify-center items-center mt-9 gap-8">
+          <button
+            onClick={() =>
+              handleImgDownload(logoImage ? logoImage : "/design_1.png")
+            }
+            className="flex items-center gap-2 bg-primary text-white shadow-xl p-2 px-1.5 rounded-lg text-base"
+          >
+            <Download />
+            Download
+          </button>
+          <Link
+            className="flex items-center gap-2 border rounded-lg shadow-xl border-[#e5e7eb] p-2 px-1.5 text-base"
+            href={"/dashboard"}
+          >
+            <LayoutDashboard />
+            Dashboard
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

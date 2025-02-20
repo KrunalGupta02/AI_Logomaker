@@ -30,13 +30,7 @@ function Hero() {
           <Button className="w-full p-6">Get Started</Button>
         </Link>
       </div>
-      <Image
-        src={"/landing.png"}
-        width={1500}
-        height={800}
-        loading="lazy"
-        alt="heroImg"
-      />
+      <Image src={"/landing.png"} width={1500} height={500} alt="heroImg" />
     </div>
   );
 }

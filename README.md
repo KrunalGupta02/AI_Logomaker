@@ -37,13 +37,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Problems:-
 
-~~1. url is imbedded during input
-~~ 2. ideas gemini api is calling 2 times
-~~3. agr already sign in hai to direct dashboard par send karo from selecting all the options
-~~
+~~- url is imbedded during input~~
+
+- Ideas gemini api is calling 2 times
+  ~~- agr already sign in hai to direct dashboard par send karo from selecting all the options~~
 
 ## Features :-
 
 - share in the social media
-- download option
+- ~~download option~~
 -
