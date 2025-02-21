@@ -7,7 +7,6 @@ import axios from "axios";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
-import { RingLoader } from "react-spinners";
 import { Download, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import Lookup from "../_components/_data/Lookup";
@@ -54,19 +53,21 @@ const GenerateLogo = () => {
     // Create a temporary anchor element
     const link = document.createElement("a");
     link.href = imageSrc;
-    link.download = "AIImage.png"; // File name for download
+    link.download = "AiImage.png"; // File name for download
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
+  // Img generation function from AI Model
   const GenerateAILogo = async () => {
-    if (modelType != "Free" && userDetail?.credits <= 0) {
+    if (modelType !== "Free" && userDetail?.credits <= 0) {
       toast("You don't have enough credits to generate the logo");
       return;
     }
 
     setLoading(true);
+
     const PROMPT = Prompt.LOGO_PROMPT.replace("{logoTitle}", formData?.title)
       .replace("{logoDesc}", formData?.desc)
       .replace("{logoColor}", formData?.palette)
@@ -76,26 +77,45 @@ const GenerateLogo = () => {
 
     console.log(PROMPT);
 
-    // Generate Logo Prompt from AI
-    // Generate Logo Image from AI
+    try {
+      // Generate Logo Prompt from AI
+      const result = await axios.post("/api/ai-logo-model", {
+        prompt: PROMPT,
+        email: userDetail.email,
+        title: formData?.title,
+        desc: formData?.desc,
+        type: modelType,
+        userCredits: userDetail.credits,
+      });
 
-    const result = await axios.post("/api/ai-logo-model", {
-      prompt: PROMPT,
-      email: userDetail.email,
-      title: formData?.title,
-      desc: formData?.desc,
-      type: modelType,
-      userCredits: userDetail.credits,
-    });
-    console.log(result.data, "data");
-    setLoading(false);
-    setLogoImage(result.data?.image);
+      console.log(result.data, "data");
+      setLoading(false);
+      setLogoImage(result.data?.image);
+    } catch (error) {
+      // Handle API errors gracefully
+      setLoading(false);
+
+      // Check if the error is a 500 Internal Server Error
+      if (error.response && error.response.status === 500) {
+        toast.error("Oops! Something went wrong.", {
+          description: "Please refresh the page and try again.",
+          action: {
+            label: "Refresh",
+            onClick: () => window.location.reload(), // Refresh the page on click
+          },
+        });
+      } else {
+        toast.error("An unexpected error occurred.", {
+          description: "Please try again later.",
+        });
+      }
+    }
   };
 
   return (
     <div>
       <div className="mt-12 flex flex-col items-center justify-center ">
-        <h1>
+        <header>
           {loading && (
             <>
               <h3 className="text-4xl text-primary font-bold mb-1">
@@ -111,7 +131,7 @@ const GenerateLogo = () => {
               <p className="text-xl my-2 mb-5">{Lookup.LoadingWaitDesc}</p>
             </>
           )}
-        </h1>
+        </header>
 
         {!loading && (
           <h1 className="text-primary font-bold text-4xl mb-8">
@@ -126,6 +146,7 @@ const GenerateLogo = () => {
             width={300}
             height={300}
             className="rounded-xl"
+            priority="true"
           />
         )}
       </div>

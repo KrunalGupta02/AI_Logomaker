@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SignInButton, useUser } from "@clerk/nextjs";
+import { toast } from "sonner";
 
 const PricingModel = ({ formData }) => {
   console.log("pricing", formData);
@@ -49,11 +50,31 @@ const PricingModel = ({ formData }) => {
             </div>
 
             {/* Redirect button for sign in  */}
-            {user ? (
+
+            {/* Conditional Rendering for Free and Premium */}
+            {pricing.title === "Premium" ? (
+              // Show Sonner Toast for Premium
+              <Button
+                className="mt-5"
+                onClick={() =>
+                  toast("Premium feature coming soon!", {
+                    description: "We are working on this feature.",
+                    action: {
+                      label: "Dismiss",
+                      onClick: () => console.log("Toast dismissed"),
+                    },
+                  })
+                }
+              >
+                {pricing.button}
+              </Button>
+            ) : user ? (
+              // Redirect for Free users who are signed in
               <Link href={"/generate-logo?type=" + pricing.title}>
                 <Button className="mt-5">{pricing.button}</Button>
               </Link>
             ) : (
+              // Sign In Button for Free users who are not signed in
               <SignInButton
                 mode="modal"
                 forceRedirectUrl={"/generate-logo?type=" + pricing.title}
