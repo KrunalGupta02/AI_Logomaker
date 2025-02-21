@@ -28,4 +28,11 @@ const LogoTitle = ({ onHandleInputChange }) => {
   );
 };
 
-export default LogoTitle;
+// Wrap the component in a Suspense boundary
+export default function LogoTitleWrapper() {
+  return (
+    <Suspense fallback={<div className="text-center">Loading...</div>}>
+      <LogoTitle />
+    </Suspense>
+  );
+}

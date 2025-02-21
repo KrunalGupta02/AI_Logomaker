@@ -175,4 +175,11 @@ const GenerateLogo = () => {
   );
 };
 
-export default GenerateLogo;
+// Wrap the component in a Suspense boundary
+export default function GenerateLogoWrapper() {
+  return (
+    <Suspense fallback={<div className="text-center">Loading...</div>}>
+      <GenerateLogo />
+    </Suspense>
+  );
+}
