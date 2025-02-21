@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { Suspense, useContext, useEffect, useState } from "react";
 import { UserDetailContext } from "../_context/UserDetailContext";
 import Prompt from "@/app/_components/_data/Prompt";
 import axios from "axios";

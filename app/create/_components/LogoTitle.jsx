@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import HeadingDescription from "./HeadingDescription";
 import Lookup from "@/app/_components/_data/Lookup";
 import { useSearchParams } from "next/navigation";
