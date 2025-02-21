@@ -3,6 +3,7 @@ import "./globals.css";
 import Provider from "./provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
+import { Analytics } from "@vercel/analytics/next";
 
 const host_Grotesk = Host_Grotesk({
   subsets: ["latin"],
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
         <body className={host_Grotesk.className}>
           <Provider>{children}</Provider>
           <Toaster />
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>
