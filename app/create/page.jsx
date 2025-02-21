@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import LogoTitle from "./_components/LogoTitle";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -13,7 +12,6 @@ import { useSearchParams } from "next/navigation";
 
 function CreateLogo() {
   const [step, setStep] = useState(1);
-
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState(() => {
     return {
@@ -59,7 +57,6 @@ function CreateLogo() {
           formData={formData}
         />
       ) : null}
-
       <div className="flex items-center justify-between mt-10">
         {step !== 1 && (
           <Button variant="outline" onClick={() => setStep(step - 1)}>
@@ -78,4 +75,17 @@ function CreateLogo() {
   );
 }
 
-export default CreateLogo;
+// Wrap the component in a Suspense boundary
+
+// The CreateLogo component is wrapped in a <Suspense> boundary in the CreateLogoWrapper component.
+// The fallback prop of <Suspense> provides a loading state while the client-side code is being loaded.
+
+// Both solutions ensure that useSearchParams() is only used in a client-side context.
+
+export default function CreateLogoWrapper() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CreateLogo />
+    </Suspense>
+  );
+}
