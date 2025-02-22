@@ -7,18 +7,13 @@ import { collection, getDocs } from "firebase/firestore";
 import Image from "next/image";
 import {
   AlertDialog,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import {
-  Share2,
-  Facebook,
-  Twitter,
-  Linkedin,
-  MessageCircle,
-} from "lucide-react";
+import { Share2, X, Download } from "lucide-react";
 
 const LogoList = () => {
   const { userDetail } = useContext(UserDetailContext);
@@ -78,6 +73,15 @@ const LogoList = () => {
     };
   };
 
+  const downloadImage = (image) => {
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = "AiImage.png";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="my-10">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -92,6 +96,7 @@ const LogoList = () => {
                   className="cursor-pointer right-2 absolute"
                   width={35}
                   height={35}
+                  strokeWidth={1}
                 />
                 <Image
                   className="w-full rounded-full"
@@ -119,23 +124,37 @@ const LogoList = () => {
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Share this logo</AlertDialogTitle>
+            <div className="flex justify-between">
+              <AlertDialogTitle>Share this logo</AlertDialogTitle>
+              <AlertDialogCancel>
+                <X />
+              </AlertDialogCancel>
+            </div>
             <AlertDialogDescription>
               Click an icon below to share.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <div className="flex justify-center">
+          <div className="flex flex-col items-center gap-2 justify-center">
             {selectedLogo && (
-              <Image
-                src={selectedLogo.image || "/loading.gif"}
-                alt="Selected Logo"
-                width={200}
-                height={200}
-                className="rounded-lg"
-              />
+              <div className="relative inline-block">
+                <Image
+                  src={selectedLogo.image || "/loading.gif"}
+                  alt="Selected Logo"
+                  width={200}
+                  height={200}
+                  className="rounded-lg "
+                />
+                <Download
+                  onClick={() =>
+                    downloadImage(selectedLogo.image || "/loading.gif")
+                  }
+                  className="absolute top-2 right-2 w-9 h-9 bg-white rounded-full cursor-pointer flex items-center justify-center p-2 hover:border hover:border-gray-500"
+                  color="#DE3163"
+                />
+              </div>
             )}
           </div>
-          <div className="flex justify-center gap-4 mt-4">
+          <div className="flex justify-center items-center gap-4 mt-1">
             {selectedLogo && getShareLinks(selectedLogo) && (
               <>
                 <a
@@ -144,9 +163,12 @@ const LogoList = () => {
                   rel="noopener noreferrer"
                   className="hover:opacity-80 transition-opacity"
                 >
-                  <Facebook
-                    size={40}
-                    className="text-blue-600 hover:scale-110 transition"
+                  <Image
+                    src={"/facebook.svg"}
+                    width={40}
+                    height={40}
+                    className="hover:scale-110 transition"
+                    alt="social-icons"
                   />
                 </a>
                 <a
@@ -155,9 +177,12 @@ const LogoList = () => {
                   rel="noopener noreferrer"
                   className="hover:opacity-80 transition-opacity"
                 >
-                  <Twitter
-                    size={40}
-                    className="text-blue-400 hover:scale-110 transition"
+                  <Image
+                    src={"/twitter.svg"}
+                    width={40}
+                    height={40}
+                    className="hover:scale-110 transition"
+                    alt="social-icons"
                   />
                 </a>
                 <a
@@ -166,9 +191,12 @@ const LogoList = () => {
                   rel="noopener noreferrer"
                   className="hover:opacity-80 transition-opacity"
                 >
-                  <Linkedin
-                    size={40}
-                    className="text-blue-700 hover:scale-110 transition"
+                  <Image
+                    src={"/linkedin.svg"}
+                    width={40}
+                    height={40}
+                    className="hover:scale-110 transition"
+                    alt="social-icons"
                   />
                 </a>
                 <a
@@ -177,9 +205,12 @@ const LogoList = () => {
                   rel="noopener noreferrer"
                   className="hover:opacity-80 transition-opacity"
                 >
-                  <MessageCircle
-                    size={40}
-                    className="text-green-500 hover:scale-110 transition"
+                  <Image
+                    src={"/whatsapp.svg"}
+                    width={40}
+                    height={40}
+                    className="hover:scale-110 transition"
+                    alt="social-icons"
                   />
                 </a>
               </>
