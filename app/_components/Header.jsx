@@ -11,7 +11,13 @@ function Header() {
   return (
     <div className="px-10 lg:px-12 xl:px-48 2xl:px-56 p-4 flex justify-between items-center shadow-sm">
       <Link href={"/"}>
-        <Image src={"/logo.svg"} alt="logo" width={180} height={100} />
+        <Image
+          src={"/mainLogo.png"}
+          alt="logo"
+          width={180}
+          height={100}
+          className="w-1/2 h-full"
+        />
       </Link>
       <div className="flex gap-3 items-center">
         {user ? (

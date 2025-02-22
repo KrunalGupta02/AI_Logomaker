@@ -30,6 +30,7 @@ const LogoList = () => {
     userDetail && GetUserLogos();
   }, [userDetail]);
 
+  // Get data from the Firestore DB
   const GetUserLogos = async () => {
     const querySnapshot = await getDocs(
       collection(db, "users", userDetail?.email, "logos")
@@ -41,6 +42,7 @@ const LogoList = () => {
     });
   };
 
+  // Share on Social Media function
   const shareOnSocials = (logo) => {
     setSelectedLogo(logo);
     setIsDialogOpen(true);
@@ -113,7 +115,7 @@ const LogoList = () => {
             ))}
       </div>
 
-      {/* Alert Dialog */}
+      {/* Alert Dialog with share buttons */}
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
