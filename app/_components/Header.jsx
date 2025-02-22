@@ -25,7 +25,9 @@ function Header() {
             <Button>Dashboard</Button>
           </Link>
         ) : (
-          <Button>Get Started</Button>
+          <Link href={"/create"}>
+            <Button>Get Started</Button>
+          </Link>
         )}
         <UserButton />
       </div>
