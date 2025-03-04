@@ -14,6 +14,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Share2, X, Download } from "lucide-react";
+import fb from "../../../public/facebook.svg";
+import whatsapp from "../../../public/whatsapp.svg";
+import linkedin from "../../../public/linkedin.svg";
+import twitter from "../../../public/twitter.svg";
 
 const LogoList = () => {
   const { userDetail } = useContext(UserDetailContext);
@@ -60,14 +64,14 @@ const LogoList = () => {
     return {
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
         shareURL
-      )}`,
-      twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+      )}&quote=${description}`,
+      twitter: `https://twitter.com/intent/tweet?text=${title}%0A${description}%0A${encodeURIComponent(
         shareURL
-      )}&text=${title}`,
+      )}`,
       linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
         shareURL
-      )}`,
-      whatsapp: `https://api.whatsapp.com/send?text=${title}%20${encodeURIComponent(
+      )}&summary=${description}`,
+      whatsapp: `https://api.whatsapp.com/send?text=${title}%0A${description}%0A${encodeURIComponent(
         shareURL
       )}`,
     };
@@ -164,7 +168,7 @@ const LogoList = () => {
                   className="hover:opacity-80 transition-opacity"
                 >
                   <Image
-                    src={"/facebook.svg"}
+                    src={fb}
                     width={40}
                     height={40}
                     className="hover:scale-110 transition"
@@ -178,7 +182,7 @@ const LogoList = () => {
                   className="hover:opacity-80 transition-opacity"
                 >
                   <Image
-                    src={"/twitter.svg"}
+                    src={twitter}
                     width={40}
                     height={40}
                     className="hover:scale-110 transition"
@@ -192,7 +196,7 @@ const LogoList = () => {
                   className="hover:opacity-80 transition-opacity"
                 >
                   <Image
-                    src={"/linkedin.svg"}
+                    src={linkedin}
                     width={40}
                     height={40}
                     className="hover:scale-110 transition"
@@ -206,7 +210,7 @@ const LogoList = () => {
                   className="hover:opacity-80 transition-opacity"
                 >
                   <Image
-                    src={"/whatsapp.svg"}
+                    src={whatsapp}
                     width={40}
                     height={40}
                     className="hover:scale-110 transition"

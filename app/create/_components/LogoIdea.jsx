@@ -30,9 +30,9 @@ const LogoIdea = ({ onHandleInputChange, formData }) => {
         prompt: PROMPT,
       });
 
-      console.log(result.data.data.ideas);
+      console.log(result?.data?.data?.ideas);
 
-      setIdeas(result.data.data.ideas);
+      setIdeas(result?.data?.data?.ideas);
     } catch (error) {
       console.error("Error fetching ideas:", error);
     } finally {
