@@ -14,10 +14,11 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Share2, X, Download } from "lucide-react";
-import fb from "../../../public/facebook.svg";
-import whatsapp from "../../../public/whatsapp.svg";
-import linkedin from "../../../public/linkedin.svg";
-import twitter from "../../../public/twitter.svg";
+
+import FacebookIcon from "../../../public/facebook.svg";
+import WhatsappIcon from "../../../public/whatsapp.svg";
+import LinkedinIcon from "../../../public/linkedin.svg";
+import TwitterIcon from "../../../public/twitter.svg";
 
 const LogoList = () => {
   const { userDetail } = useContext(UserDetailContext);
@@ -31,14 +32,21 @@ const LogoList = () => {
 
   // Get data from the Firestore DB
   const GetUserLogos = async () => {
-    const querySnapshot = await getDocs(
-      collection(db, "users", userDetail?.email, "logos")
-    );
-    setLogoList([]); // Reset the state before updating
-    querySnapshot.forEach((doc) => {
-      // Include the document ID with the logo data
-      setLogoList((prev) => [...prev, { id: doc.id, ...doc.data() }]);
-    });
+    if (!userDetail?.email) return;
+
+    try {
+      const querySnapshot = await getDocs(
+        collection(db, "users", userDetail.email, "logos")
+      );
+      const logos = [];
+      querySnapshot.forEach((doc) => {
+        // Include the document ID with the logo data
+        logos.push({ id: doc.id, ...doc.data() });
+      });
+      setLogoList(logos);
+    } catch (error) {
+      console.error("Error fetching logos:", error);
+    }
   };
 
   // Share on Social Media function
@@ -51,7 +59,7 @@ const LogoList = () => {
     if (!logo || !logo.id) return null;
 
     // Get the base URL of your website
-    const baseURL = window.location.origin;
+    const baseURL = typeof window !== "undefined" ? window.location.origin : "";
     // Construct the share URL using the logo ID
     const shareURL = `${baseURL}/share/${logo.id}`;
 
@@ -78,6 +86,8 @@ const LogoList = () => {
   };
 
   const downloadImage = (image) => {
+    if (typeof window === "undefined") return;
+
     const link = document.createElement("a");
     link.href = image;
     link.download = "AiImage.png";
@@ -146,7 +156,7 @@ const LogoList = () => {
                   alt="Selected Logo"
                   width={200}
                   height={200}
-                  className="rounded-lg "
+                  className="rounded-lg"
                 />
                 <Download
                   onClick={() =>
@@ -168,11 +178,12 @@ const LogoList = () => {
                   className="hover:opacity-80 transition-opacity"
                 >
                   <Image
-                    src={fb}
+                    src={FacebookIcon}
                     width={40}
                     height={40}
                     className="hover:scale-110 transition"
-                    alt="social-icons"
+                    alt="Facebook"
+                    priority
                   />
                 </a>
                 <a
@@ -182,11 +193,12 @@ const LogoList = () => {
                   className="hover:opacity-80 transition-opacity"
                 >
                   <Image
-                    src={twitter}
+                    src={TwitterIcon}
                     width={40}
                     height={40}
                     className="hover:scale-110 transition"
-                    alt="social-icons"
+                    alt="Twitter"
+                    priority
                   />
                 </a>
                 <a
@@ -196,11 +208,12 @@ const LogoList = () => {
                   className="hover:opacity-80 transition-opacity"
                 >
                   <Image
-                    src={linkedin}
+                    src={LinkedinIcon}
                     width={40}
                     height={40}
                     className="hover:scale-110 transition"
-                    alt="social-icons"
+                    alt="LinkedIn"
+                    priority
                   />
                 </a>
                 <a
@@ -210,11 +223,12 @@ const LogoList = () => {
                   className="hover:opacity-80 transition-opacity"
                 >
                   <Image
-                    src={whatsapp}
+                    src={WhatsappIcon}
                     width={40}
                     height={40}
                     className="hover:scale-110 transition"
-                    alt="social-icons"
+                    alt="WhatsApp"
+                    priority
                   />
                 </a>
               </>
