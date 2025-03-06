@@ -5,6 +5,7 @@ import Header from "./_components/Header";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
 import { UserDetailContext } from "./_context/UserDetailContext";
+import Footer from "./_components/Footer";
 
 const Provider = ({ children }) => {
   const { user } = useUser();
@@ -29,9 +30,12 @@ const Provider = ({ children }) => {
   };
   return (
     <UserDetailContext.Provider value={{ userDetail, setUserDetail }}>
-      <div>
+      <div className="flex flex-col min-h-screen">
         <Header />
-        <div className="px-10 lg:px-12 xl:px-48 2xl:px-56">{children}</div>
+        <div className="flex-1 px-10 lg:px-12 xl:px-48 2xl:px-56">
+          {children}
+        </div>
+        <Footer />
       </div>
     </UserDetailContext.Provider>
   );

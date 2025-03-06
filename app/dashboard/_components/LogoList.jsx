@@ -25,6 +25,8 @@ const LogoList = () => {
   const [logoList, setLogoList] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedLogo, setSelectedLogo] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasFetched, setHasFetched] = useState(false); // Tracks if API call is completed
 
   useEffect(() => {
     userDetail && GetUserLogos();
@@ -34,6 +36,8 @@ const LogoList = () => {
   const GetUserLogos = async () => {
     if (!userDetail?.email) return;
 
+    setIsLoading(true); // Start loading
+    setHasFetched(false);
     try {
       const querySnapshot = await getDocs(
         collection(db, "users", userDetail.email, "logos")
@@ -46,6 +50,9 @@ const LogoList = () => {
       setLogoList(logos);
     } catch (error) {
       console.error("Error fetching logos:", error);
+    } finally {
+      setIsLoading(false); // Stop loading
+      setHasFetched(true); // Mark API call as completed
     }
   };
 
@@ -98,41 +105,55 @@ const LogoList = () => {
 
   return (
     <div className="my-10">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {logoList.length > 0
-          ? logoList.map((logo) => (
-              <div
-                key={logo.id}
-                className="hover:scale-105 cursor-pointer transition-all border-2 p-2 border-gray-500 shadow-xl rounded-xl relative"
-              >
-                <Share2
-                  onClick={() => shareOnSocials(logo)}
-                  className="cursor-pointer right-2 absolute"
-                  width={35}
-                  height={35}
-                  strokeWidth={1}
-                />
-                <Image
-                  className="w-full rounded-full"
-                  src={logo.image || "/loading.gif"}
-                  alt={logo.title}
-                  width={400}
-                  height={200}
-                />
-                <h2 className="text-center text-lg font-medium mt-2">
-                  {logo.title}
-                </h2>
-                <p className="text-sm text-gray-500 text-center">{logo.desc}</p>
-              </div>
-            ))
-          : // Skeleton Effect for loading state
-            [1, 2, 3, 4, 5, 6].map((item) => (
-              <div
-                key={item}
-                className="bg-slate-200 animate-pulse rounded-xl w-full h-48"
-              ></div>
-            ))}
-      </div>
+      {/* Show loading skeletons if data is still being fetched */}
+      {isLoading && (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {[...Array(6)].map((_, index) => (
+            <div
+              key={index}
+              className="bg-slate-200 animate-pulse rounded-xl w-full h-48"
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Show no images message only after API call finishes */}
+      {!isLoading && hasFetched && logoList.length === 0 && (
+        <div className="text-center text-gray-600 text-lg font-medium">
+          No images generated yet. Try creating one!
+        </div>
+      )}
+
+      {/* Show logos if available */}
+      {!isLoading && logoList.length > 0 && (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {logoList.map((logo) => (
+            <div
+              key={logo.id}
+              className="hover:scale-105 cursor-pointer transition-all border-2 p-2 border-gray-500 shadow-xl rounded-xl relative"
+            >
+              <Share2
+                onClick={() => shareOnSocials(logo)}
+                className="cursor-pointer right-2 absolute"
+                width={35}
+                height={35}
+                strokeWidth={1}
+              />
+              <Image
+                className="w-full rounded-full"
+                src={logo.image || "/loading.gif"}
+                alt={logo.title}
+                width={400}
+                height={200}
+              />
+              <h2 className="text-center text-lg font-medium mt-2">
+                {logo.title}
+              </h2>
+              <p className="text-sm text-gray-500 text-center">{logo.desc}</p>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Alert Dialog with share buttons */}
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

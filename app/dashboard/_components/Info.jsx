@@ -13,7 +13,7 @@ const Info = () => {
     <div>
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-primary text-3xl">
-          Hello, {userDetail?.name}
+          {userDetail?.name ? `Hello, ${userDetail.name}` : "Loading..."}
         </h2>
         <div className="flex items-center gap-2">
           <Image src={"/coin.png"} width={40} height={40} alt="coin" />
