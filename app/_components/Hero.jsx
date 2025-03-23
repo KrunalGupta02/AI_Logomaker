@@ -5,9 +5,26 @@ import Lookup from "./_data/Lookup";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 function Hero() {
   const [logoTitle, setLogoTitle] = useState();
+  const { resolvedTheme } = useTheme();
+
+  let src;
+
+  switch (resolvedTheme) {
+    case 'light':
+      src = '/landing.png';
+      break;
+    case 'dark':
+      src = '/dark_landing.png';
+      break;
+    default:
+      src = '/landing.png';
+      break;
+  }
+
   return (
     <div className="flex items-center mt-24 flex-col gap-5">
       <h2 className="text-primary text-5xl text-center font-bold">
@@ -30,7 +47,13 @@ function Hero() {
           <Button className="w-full p-6">Get Started</Button>
         </Link>
       </div>
-      <Image src={"/landing.png"} width={1500} height={500} alt="heroImg" />
+      <Image
+        src={src}
+        width={1500}
+        height={500}
+        alt="heroImg"
+        suppressHydrationWarning
+      />
     </div>
   );
 }

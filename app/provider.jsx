@@ -6,6 +6,7 @@ import axios from "axios";
 import { useUser } from "@clerk/nextjs";
 import { UserDetailContext } from "./_context/UserDetailContext";
 import Footer from "./_components/Footer";
+import { ThemeProvider } from "next-themes";
 
 const Provider = ({ children }) => {
   const { user } = useUser();
@@ -29,15 +30,17 @@ const Provider = ({ children }) => {
     setUserDetail(result.data);
   };
   return (
-    <UserDetailContext.Provider value={{ userDetail, setUserDetail }}>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <div className="flex-1 px-10 lg:px-12 xl:px-48 2xl:px-56">
-          {children}
+    <ThemeProvider attribute="class" defaultTheme="light">
+      <UserDetailContext.Provider value={{ userDetail, setUserDetail }}>
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <div className="flex-1 px-10 lg:px-12 xl:px-48 2xl:px-56">
+            {children}
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    </UserDetailContext.Provider>
+      </UserDetailContext.Provider>
+    </ThemeProvider>
   );
 };
 

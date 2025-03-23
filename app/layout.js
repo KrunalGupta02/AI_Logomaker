@@ -4,6 +4,7 @@ import Provider from "./provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/next";
+import { ThemeProvider } from "next-themes";
 
 const host_Grotesk = Host_Grotesk({
   subsets: ["latin"],
@@ -18,12 +19,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <head>
           <link rel="icon" href="/mainLogo.png" sizes="any" />
         </head>
         <body className={host_Grotesk.className}>
-          <Provider>{children}</Provider>
+          <Provider>
+            {children}
+          </Provider>
           <Toaster />
           <Analytics />
         </body>
