@@ -13,7 +13,7 @@ const DarkLightModeBtn = () => {
         <div className="flex gap-2 items-center">
             <button type="button" onClick={toggleTheme}>
                 {theme == "dark" ? (
-                    <Moon onClick={toggleTheme} className="text-2xl animate-fade-in-right text-yellow-400 hover:text-purple cursor-pointer"
+                    <Moon onClick={toggleTheme} className="text-2xl animate-fade-in-right text-white hover:text-purple cursor-pointer"
                     />
                 ) : (
                     <Sun onClick={toggleTheme} className="text-2xl animate-fade-in-right text-sky-400 cursor-pointer"

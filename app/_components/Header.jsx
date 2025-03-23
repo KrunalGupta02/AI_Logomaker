@@ -13,7 +13,8 @@ const DarkLightModeBtn = dynamic(() => import('./DarkLightModeBtn'), { ssr: fals
 function Header() {
   const { user } = useUser();
   return (
-    <div className="px-10 lg:px-12 xl:px-48 2xl:px-56 p-4 flex justify-between items-center shadow-lg sticky top-0 z-50 bg-white">
+    <div className="px-10 lg:px-12 xl:px-48 2xl:px-56 p-4 flex justify-between items-center 
+    shadow-lg sticky top-0 z-50 bg-white dark:bg-black dark:border-b border-gray-800">
       <Link href={"/"} className="inline-block">
         <Image src={"/mainLogo.png"} alt="logo" width={100} height={100} />
       </Link>
